@@ -53,8 +53,10 @@ class ScoreFragment : Fragment() {
         )
         val scoreFragmentArgs by navArgs<ScoreFragmentArgs>()
 
-        viewModel = ViewModelProvider(this, viewModelFactory).get(ScoreViewModel::class.java)
         viewModelFactory = ScoreViewModelFactory(scoreFragmentArgs.score)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(ScoreViewModel::class.java)
+
+        binding.scoreViewModel = viewModel
 
         // Get args using by navArgs property delegate
 

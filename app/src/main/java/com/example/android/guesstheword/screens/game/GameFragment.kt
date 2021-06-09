@@ -26,6 +26,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.NavHostFragment.findNavController
@@ -53,16 +54,11 @@ class GameFragment : Fragment() {
         )
 
         // Get the viewmodel
-        Log.i("GameFragment", "Called ViewModelProvider")
         viewModel = ViewModelProvider(this).get(GameViewModel::class.java)
 
+        binding.gameViewModel = viewModel
+
         // update the UI
-        binding.correctButton.setOnClickListener {
-            viewModel.onCorrect()
-        }
-        binding.skipButton.setOnClickListener {
-            viewModel.onSkip()
-        }
         viewModel.word.observe(viewLifecycleOwner, Observer { newWord ->
             binding.wordText.text = newWord
         })
@@ -82,16 +78,4 @@ class GameFragment : Fragment() {
         })
         return binding.root
     }
-
-    /**
-     * Called when the game is finished
-     */
-    fun gameFinished() {
-//        val currentScore = viewModel.score.value ?: 0
-//        val action = GameFragmentDirections.actionGameToScore(currentScore)
-//        action.setScore(currentScore)
-//        findNavController(this).navigate(action)
-        Toast.makeText(this.activity, "Game Over", Toast.LENGTH_SHORT).show()
-    }
-
 }
